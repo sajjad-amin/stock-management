@@ -1,20 +1,19 @@
 <div id="sidebar" class="sidebar left">
     <ul class="list-sidebar bg-defoult">
-        </li>
-        <li> <a href="#" data-toggle="collapse" data-target="#dashboard" class="collapsed active" > <i class="fa fa-th-large"></i> <span class="nav-label"> Dashboards </span> <span class="fa fa-chevron-left pull-right"></span> </a>
-            <ul class="sub-menu collapse" id="dashboard">
-                <li class="active"><a href="#">CSS3 Animation</a></li>
-                <li><a href="#">General</a></li>
-                <li><a href="#">Buttons</a></li>
-                <li><a href="#">Tabs & Accordions</a></li>
-                <li><a href="#">Typography</a></li>
-                <li><a href="#">FontAwesome</a></li>
-                <li><a href="#">Slider</a></li>
-                <li><a href="#">Panels</a></li>
-                <li><a href="#">Widgets</a></li>
-                <li><a href="#">Bootstrap Model</a></li>
+        <li> <a href=""><i class="fa fa-pie-chart"></i> <span class="nav-label">Statistics</span> </a></li>
+        <li> <a href="#" data-toggle="collapse" data-target="#product" class="collapsed active" > <i class="fa fa-th-large"></i> <span class="nav-label">Products</span> <span class="fa fa-chevron-left pull-right"></span> </a>
+            <ul class="sub-menu collapse" id="product">
+                <li><a href="#"><i class="fa fa-database"></i> All Products</a></li>
+                <li><a href="#"><i class="fa fa-plus"></i> Add New Product</a></li>
+                <li><a href="#"><i class="fa fa-pencil"></i> Update Product</a></li>
             </ul>
         </li>
-        <li> <a href=""><i class="fa fa-pie-chart"></i> <span class="nav-label">Metrics</span> </a></li>
+        <li> <a href=""><i class="fa fa-credit-card-alt"></i> <span class="nav-label">Sell</span> </a></li>
+        <li> <a href=""><i class="fa fa-file-text"></i> <span class="nav-label">Invoices</span> </a></li>
+        <li> <a href="#" data-toggle="collapse" data-target="#ecommerce" class="collapsed active" > <i class="fa fa-shopping-basket"></i> <span class="nav-label">E-Commerce</span> <span class="fa fa-chevron-left pull-right"></span> </a>
+            <ul class="sub-menu collapse" id="ecommerce">
+                <li><a href="#"><i class="fa fa-bookmark"></i>Orders</a></li>
+            </ul>
+        </li>
     </ul>
 </div>

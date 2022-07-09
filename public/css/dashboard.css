@@ -15,8 +15,8 @@ a:active, a:hover {
 .sidebar li a i{ padding-right:5px;}
 .sidebar ul li .sub-menu li a{ position:relative}
 .sidebar ul li .sub-menu li a:before{
-    font-family: FontAwesome;
-    content: "\f105";
+    /*font-family: FontAwesome;*/
+    /*content: "\f105";*/
     display: inline-block;
     padding-left: 0px;
     padding-right: 10px;
