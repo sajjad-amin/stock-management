@@ -1,7 +1,8 @@
 @extends('layouts.dashboard')
+@section('title', 'All Products')
 @section('content')
     <div class="container-fluid">
-        <h1>@if($user->role == 1) Admin @else User @endif</h1>
+        <h1>All Products</h1>
     </div>
 @endsection
 @section('script')

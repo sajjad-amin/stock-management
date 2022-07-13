@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\ProductController;
 use App\Http\Controllers\WebsiteController;
 use Illuminate\Support\Facades\Route;
 
@@ -17,6 +18,13 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [WebsiteController::class, 'home'])->name('home');
 
-Route::get('/dashboard', [DashboardController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
+Route::prefix('system')->middleware(['auth','verified'])->group(function(){
+    Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    Route::prefix('products')->name('product.')->group(function(){
+        Route::get('all', [ProductController::class, 'allProducts'])->name('all');
+        Route::get('new', [ProductController::class, 'newProduct'])->name('new');
+        Route::get('edit', [ProductController::class, 'editProduct'])->name('edit');
+    });
+});
 
 require __DIR__.'/auth.php';
