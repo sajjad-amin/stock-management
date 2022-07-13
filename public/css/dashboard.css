@@ -51,3 +51,6 @@ a:active, a:hover {
     width: 150px;
     z-index: 100;
 }
+.list-image{
+    width: 80px;
+}

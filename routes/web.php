@@ -23,7 +23,9 @@ Route::prefix('system')->middleware(['auth','verified'])->group(function(){
     Route::prefix('products')->name('product.')->group(function(){
         Route::get('all', [ProductController::class, 'allProducts'])->name('all');
         Route::get('new', [ProductController::class, 'newProduct'])->name('new');
-        Route::get('edit', [ProductController::class, 'editProduct'])->name('edit');
+        Route::post('new', [ProductController::class, 'createProduct'])->name('new.create');
+        Route::get('edit/{id?}', [ProductController::class, 'editProduct'])->name('edit');
+        Route::post('update/{id}', [ProductController::class, 'updateProduct'])->name('update');
     });
 });
 
