@@ -27,6 +27,7 @@ function createProduct(url, event){
     const image = $('#image').prop('files')[0];
     const title = $('#title').val();
     const price = $('#price').val();
+    const sellPrice = $('#sell-price').val();
     const quantity = $('#quantity').val();
     const discount = $('#discount').val();
     const shortDescription = $('#short-description').val();
@@ -36,6 +37,7 @@ function createProduct(url, event){
     formData.append('image', image);
     formData.append('title', title);
     formData.append('price', price);
+    formData.append('sell_price', sellPrice);
     formData.append('quantity', quantity);
     formData.append('discount', discount);
     formData.append('short_description', shortDescription);

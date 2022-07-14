@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\SellController;
 use App\Http\Controllers\WebsiteController;
 use Illuminate\Support\Facades\Route;
 
@@ -17,7 +18,8 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', [WebsiteController::class, 'home'])->name('home');
-Route::get('system/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+
+Route::get('system/dashboard', [DashboardController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::prefix('system')->middleware(['auth','verified', 'can:admin'])->group(function(){
     Route::prefix('products')->name('product.')->group(function(){
@@ -27,6 +29,11 @@ Route::prefix('system')->middleware(['auth','verified', 'can:admin'])->group(fun
         Route::get('edit/{id?}', [ProductController::class, 'editProduct'])->name('edit');
         Route::post('update/{id}', [ProductController::class, 'updateProduct'])->name('update');
         Route::delete('delete/{id}', [ProductController::class, 'deleteProduct'])->name('delete');
+    });
+    Route::prefix('sell')->name('sell.')->group(function(){
+        Route::get('products', [SellController::class, 'getAll'])->name('products');
+        Route::post('products', [SellController::class, 'sell'])->name('sell');
+        Route::put('products', [SellController::class, 'returnProduct'])->name('return');
     });
 });
 

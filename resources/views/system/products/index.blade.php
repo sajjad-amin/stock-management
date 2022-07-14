@@ -1,10 +1,7 @@
 @extends('layouts.dashboard')
 @section('title', 'All Products')
 @section('content')
-    <div class="container">
-        <div class="jumbotron">
-            <h1>All Products</h1>
-        </div>
+    <div class="container-fluid">
         <table class="table">
             <thead>
             <tr>

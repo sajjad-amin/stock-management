@@ -1,12 +1,9 @@
 @extends('layouts.dashboard')
 @section('title', 'Edit Product')
 @section('content')
-    <div class="container">
-        <div class="jumbotron">
-            <h1>Edit Product</h1>
-        </div>
+    <div class="container-fluid">
         @if(isset($product))
-        <form id="product-form" method="post">
+        <form id="product-form" method="post" class="mt-3 mb-3">
             @csrf
             <input name="targetUrl" type="hidden" value="{{route('product.update',['id'=>$product->id])}}">
             <input name="actionEvent" type="hidden" value="edit">
@@ -33,14 +30,18 @@
             </div>
             <div class="form-group row">
                 <label for="price" class="col-md-2 col-form-label">Price</label>
-                <div class="col-md-2">
+                <div class="col-md-1">
                     <input name="price" type="number" class="form-control" id="price" value="{{$product->price}}">
                 </div>
-                <label for="quantity" class="col-md-2 col-form-label">Quantity</label>
+                <label for="sell-price" class="col-md-1 col-form-label">Sell Price</label>
+                <div class="col-sm-2">
+                    <input name="sell-price" type="number" class="form-control" id="sell-price" value="{{$product->sell_price}}">
+                </div>
+                <label for="quantity" class="col-md-1 col-form-label">Quantity</label>
                 <div class="col-md-2">
                     <input name="quantity" type="number" class="form-control" id="quantity" value="{{$product->quantity}}">
                 </div>
-                <label for="discount" class="col-md-2 col-form-label">Discount</label>
+                <label for="discount" class="col-md-1 col-form-label">Discount</label>
                 <div class="col-md-2">
                     <select name="discount" class="form-control" id="discount">
                         <option value="0">None</option>
