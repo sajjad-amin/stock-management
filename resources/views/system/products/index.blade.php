@@ -12,6 +12,7 @@
                 <th></th>
                 <th scope="col">Product Code</th>
                 <th scope="col">Name</th>
+                <th scope="col">Quantity</th>
                 <th scope="col">Price</th>
                 <th scope="col">Discount</th>
                 <th scope="col">Action</th>
@@ -24,8 +25,9 @@
                     <th><img class="img img-thumbnail list-image" src="{{ str_replace('public', 'storage', url($product->image != null ? $product->image : asset('images/dummy-image.webp'))) }}" alt="" title="" /></th>
                     <td>{{$product->product_code}}</td>
                     <td>{{$product->title}}</td>
+                    <td>{{$product->quantity}}</td>
                     <td>{{$product->price}}</td>
-                    <td>{{$product->discount}}</td>
+                    <td>{{$product->discount}} %</td>
                     <td><a href="{{route('product.edit',['id' => $product->id])}}" type="button" class="btn btn-primary">Edit</a></td>
                 </tr>
             @endforeach

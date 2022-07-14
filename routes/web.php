@@ -17,15 +17,16 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', [WebsiteController::class, 'home'])->name('home');
+Route::get('system/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
-Route::prefix('system')->middleware(['auth','verified'])->group(function(){
-    Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
+Route::prefix('system')->middleware(['auth','verified', 'can:admin'])->group(function(){
     Route::prefix('products')->name('product.')->group(function(){
         Route::get('all', [ProductController::class, 'allProducts'])->name('all');
         Route::get('new', [ProductController::class, 'newProduct'])->name('new');
         Route::post('new', [ProductController::class, 'createProduct'])->name('new.create');
         Route::get('edit/{id?}', [ProductController::class, 'editProduct'])->name('edit');
         Route::post('update/{id}', [ProductController::class, 'updateProduct'])->name('update');
+        Route::delete('delete/{id}', [ProductController::class, 'deleteProduct'])->name('delete');
     });
 });
 

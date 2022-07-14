@@ -3,9 +3,10 @@
 @section('content')
     <div class="container">
         <div class="jumbotron">
-            <h1>Update Product</h1>
+            <h1>Edit Product</h1>
         </div>
-        <form method="post">
+        @if(isset($product))
+        <form id="product-form" method="post">
             @csrf
             <input name="targetUrl" type="hidden" value="{{route('product.update',['id'=>$product->id])}}">
             <input name="actionEvent" type="hidden" value="edit">
@@ -32,11 +33,15 @@
             </div>
             <div class="form-group row">
                 <label for="price" class="col-md-2 col-form-label">Price</label>
-                <div class="col-sm-4">
+                <div class="col-md-2">
                     <input name="price" type="number" class="form-control" id="price" value="{{$product->price}}">
                 </div>
+                <label for="quantity" class="col-md-2 col-form-label">Quantity</label>
+                <div class="col-md-2">
+                    <input name="quantity" type="number" class="form-control" id="quantity" value="{{$product->quantity}}">
+                </div>
                 <label for="discount" class="col-md-2 col-form-label">Discount</label>
-                <div class="col-sm-4">
+                <div class="col-md-2">
                     <select name="discount" class="form-control" id="discount">
                         <option value="0">None</option>
                         @for($i = 1; $i <= 100; $i++)
@@ -59,6 +64,9 @@
             </div>
             <input type="submit" class="btn btn-primary float-right mb-3" value="Update">
         </form>
+            <button onClick="deleteProduct(`{{route('product.delete',['id' => $product->id])}}`)" class="btn btn-danger float-right mr-3">Delete</button>
+        @else
+        @endif
     </div>
 @endsection
 @section('script')

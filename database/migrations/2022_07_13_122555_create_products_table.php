@@ -20,6 +20,7 @@ class CreateProductsTable extends Migration
             $table->string('image')->nullable();
             $table->string('title');
             $table->integer('price');
+            $table->integer('quantity');
             $table->integer('discount');
             $table->tinyText('short_description');
             $table->text('description');

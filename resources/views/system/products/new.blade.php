@@ -5,7 +5,7 @@
         <div class="jumbotron">
             <h1>New Product</h1>
         </div>
-        <form method="post">
+        <form id="product-form" method="post">
             @csrf
             <input name="targetUrl" type="hidden" value="{{route('product.new.create')}}">
             <input name="actionEvent" type="hidden" value="create">
@@ -32,11 +32,15 @@
             </div>
             <div class="form-group row">
                 <label for="price" class="col-md-2 col-form-label">Price</label>
-                <div class="col-sm-4">
+                <div class="col-sm-2">
                     <input name="price" type="number" class="form-control" id="price">
                 </div>
+                <label for="quantity" class="col-md-2 col-form-label">Quantity</label>
+                <div class="col-md-2">
+                    <input name="quantity" type="number" class="form-control" id="quantity">
+                </div>
                 <label for="discount" class="col-md-2 col-form-label">Discount</label>
-                <div class="col-sm-4">
+                <div class="col-sm-2">
                     <select name="discount" class="form-control" id="discount">
                         <option value="0">None</option>
                         @for($i = 1; $i <= 100; $i++)
