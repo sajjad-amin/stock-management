@@ -34,6 +34,7 @@ class SellController extends Controller
                 'interest' => ($sell_price * $quantity - $remove_price) - ($product->price * $quantity)
             ]);
             if($sold){
+                toastr()->success($quantity.' product(s) has been sold!');
                 return redirect()->action([get_class($this), 'getAll']);
             }
         }
@@ -43,6 +44,7 @@ class SellController extends Controller
         $product = Product::where('id', $sold_product->product_id)->first();
         if(Product::whereId($product->id)->update(['quantity' => $product->quantity + $sold_product->quantity])){
             if(Sell::whereId($sold_product->id)->delete()){
+                toastr()->info($sold_product->quantity.' product(s) has been returned');
                 return redirect()->action([get_class($this), 'getAll']);
             }
         }

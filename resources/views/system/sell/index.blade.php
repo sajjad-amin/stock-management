@@ -1,14 +1,30 @@
 @extends('layouts.dashboard')
 @section('title', 'Sell')
+@section('style')
+    <style>
+        #recentSells {
+            position: absolute;
+            right: 0;
+            display: none;
+            box-shadow: 1px 1px 50px 30px rgba(0,0,0,0.33);
+            -webkit-box-shadow: 1px 1px 50px 30px rgba(0,0,0,0.33);
+            -moz-box-shadow: 1px 1px 49px 30px rgba(0,0,0,0.33);
+            overflow-y: scroll;
+        }
+    </style>
+@endsection
 @section('content')
     <div class="container-fluid">
         <div class="row">
-            <div class="col-md-8">
-                <div class="card">
+            <div class="col-md-12">
+                <div class="card mt-3">
                     <div class="card-header">
-                        <h5 class="text-center">Products</h5>
+                        <button id="recentSellsBtn" class="btn btn-success">Show Recent Sells</button>
                     </div>
                     <div class="card-body">
+                        <div class="form-group row">
+                            <input type="text" class="form-control mr-3 ml-3" placeholder="Search product" id="search" autofocus>
+                        </div>
                         <table class="table">
                             <thead>
                             <tr>
@@ -24,7 +40,7 @@
                                 <th scope="col">Action</th>
                             </tr>
                             </thead>
-                            <tbody>
+                            <tbody id="productTable">
                             @foreach($products as $product)
                                 <form action="{{route('sell.sell')}}" method="post">
                                     @csrf
@@ -73,54 +89,84 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-4">
-                <div class="card">
-                    <div class="card-header">
-                        <h5 class="text-center">Resent Sells</h5>
+            <div id="recentSells" class="card mt-3 mr-3">
+                <div class="card-header">
+                    <h5 class="text-center">Resent Sells</h5>
+                </div>
+                <div class="card-body">
+                    <div class="form-group row">
+                        <input type="text" class="form-control mr-3 ml-3" placeholder="Search product" id="recentSellsSearch">
                     </div>
-                    <div class="card-body">
-                        <table class="table table-dark">
-                            <thead>
+                    <table class="table table-dark">
+                        <thead>
+                        <tr class="text-center">
+                            <th scope="col">Product Code</th>
+                            <th scope="col">Quantity</th>
+                            <th scope="col">Paid</th>
+                            <th scope="col">Discount</th>
+                            <th scope="col">Selling Date</th>
+                            <th colspan="2">Action</th>
+                        </tr>
+                        </thead>
+                        <tbody id="recentSellsTable">
+                        @foreach($sells as $item)
                             <tr>
-                                <th scope="col">Product Code</th>
-                                <th scope="col">Quantity</th>
-                                <th scope="col">Paid</th>
-                                <th scope="col">Discount</th>
-                                <th scope="col">Action</th>
+                                <td>
+                                    {{$item->product_code}}
+                                </td>
+                                <td>
+                                    {{$item->quantity}}
+                                </td>
+                                <td>
+                                    {{$item->sell_price}}
+                                </td>
+                                <td>
+                                    {{$item->discount}} %
+                                </td>
+                                <td>
+                                    {{$item->created_at->format('d M, Y | h:i A')}}
+                                </td>
+                                <td>
+                                    <button class="btn btn-sm btn-primary">Print</button>
+                                </td>
+                                <td>
+                                    <form action="{{route('sell.return')}}" method="post">
+                                        @csrf
+                                        @method('PUT')
+                                        <input name="id" type="hidden" value="{{$item->id}}">
+                                        <input type="submit" class="btn btn-sm btn-danger" value="Return">
+                                    </form>
+                                </td>
                             </tr>
-                            </thead>
-                            <tbody>
-                            @foreach($sells as $item)
-                                <form action="{{route('sell.return')}}" method="post">
-                                    @csrf
-                                    @method('PUT')
-                                    <input name="id" type="hidden" value="{{$item->id}}">
-                                    <tr>
-                                        <td>
-                                            {{$item->product_code}}
-                                        </td>
-                                        <td>
-                                            {{$item->quantity}}
-                                        </td>
-                                        <td>
-                                            {{$item->sell_price}}
-                                        </td>
-                                        <td>
-                                            {{$item->discount}} %
-                                        </td>
-                                        <td>
-                                            <input type="submit" class="btn btn-danger" value="Return">
-                                        </td>
-                                    </tr>
-                                </form>
-                            @endforeach
-                            </tbody>
-                        </table>
-                    </div>
+                        @endforeach
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
     </div>
 @endsection
 @section('script')
+    <script>
+        $(document).ready(function(){
+            $('#recentSellsBtn').click(function (){
+                $('#recentSells').toggle();
+                $(this).text(function(i, text){
+                    return text === "Show Recent Sells" ? "Hide Recent Sells" : "Show Recent Sells";
+                });
+            });
+            $("#search").on("keyup", function() {
+                let value = $(this).val().toLowerCase();
+                $("#productTable tr").filter(function() {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1);
+                });
+            });
+            $("#recentSellsSearch").on("keyup", function() {
+                let value = $(this).val().toLowerCase();
+                $("#recentSellsTable tr").filter(function() {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1);
+                });
+            });
+        });
+    </script>
 @endsection

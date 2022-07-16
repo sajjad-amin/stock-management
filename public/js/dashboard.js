@@ -4,6 +4,7 @@ let sideBarHeight = $(window).height() - $('#navbar').height() - 16;
 let sideBarWidth = $(window).width() - $('#sidebar').width();
 $('#sidebar').css('height', sideBarHeight);
 $('#dashboardContent').css('width', sideBarWidth);
+$('#recentSells').css('height', sideBarHeight - 30);
 $('#sidebarBtn').click(function(){
     $('.sidebar').toggleClass('fliph');
 });
