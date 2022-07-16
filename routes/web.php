@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\InstallController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\SellController;
 use App\Http\Controllers\WebsiteController;
@@ -37,5 +38,7 @@ Route::prefix('system')->middleware(['auth','verified', 'can:admin'])->group(fun
         Route::put('products', [SellController::class, 'returnProduct'])->name('return');
     });
 });
+
+Route::get('/install', [InstallController::class, 'install']);
 
 require __DIR__.'/auth.php';
