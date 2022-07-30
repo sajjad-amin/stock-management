@@ -51,6 +51,7 @@
                     </select>
                 </div>
             </div>
+            <div id="attributes"></div>
             <div class="form-group row">
                 <label for="short-description" class="col-md-2 col-form-label">Short Description</label>
                 <div class="col-sm-10">
@@ -71,4 +72,30 @@
     </div>
 @endsection
 @section('script')
+    <script>
+        const metaKeys = [
+            @foreach(unserialize($categories->metadata) as $key)
+            "{{$key}}",
+            @endforeach
+        ];
+        const metaData = {
+            @foreach(array_keys((array) unserialize($product->metadata)) as $key)
+            {{$key}} : "{{unserialize($product->metadata)->$key}}",
+            @endforeach
+        };
+        let template = '';
+        metaKeys.forEach(key => {
+            let name = key.replace('_', ' ');
+            name = name.toLowerCase().replace(/\b[a-z]/g, function(letter) {
+                return letter.toUpperCase();
+            });
+            template += `<div class="form-group row">
+                <label for="${key}" class="col-md-2 col-form-label">${name}</label>
+                <div class="col-sm-10">
+                    <input name="${key}" type="text" class="form-control attributes" id="${key}" value="${metaData[key]}">
+                </div>
+            </div>`;
+        })
+        $('#attributes').html(template);
+    </script>
 @endsection

@@ -51,4 +51,8 @@ class CategoryController extends Controller
         }
         return redirect()->action([get_class(), 'allCategories']);
     }
+
+    public function findCategory($id){
+        return Category::whereId($id)->first();
+    }
 }

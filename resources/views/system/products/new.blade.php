@@ -51,6 +51,18 @@
                 </div>
             </div>
             <div class="form-group row">
+                <label for="category" class="col-md-2 col-form-label">Category</label>
+                <div class="col-sm-4">
+                    <select name="category" class="form-control" id="category">
+                        <option value="0">Choose Category</option>
+                        @foreach($categories as $category)
+                            <option value="{{$category->id}}">{{$category->name}}</option>
+                        @endforeach
+                    </select>
+                </div>
+            </div>
+            <div id="attributes"></div>
+            <div class="form-group row">
                 <label for="short-description" class="col-md-2 col-form-label">Short Description</label>
                 <div class="col-sm-10">
                     <textarea name="short-description" rows="3" class="form-control" id="short-description"></textarea>
@@ -62,9 +74,36 @@
                     <textarea name="description" rows="8" class="form-control" id="description"></textarea>
                 </div>
             </div>
-            <input type="submit" class="btn btn-primary float-right" value="Create">
+            <input type="submit" class="btn btn-primary mt-5 mb-5 float-right" value="Create">
         </form>
     </div>
 @endsection
 @section('script')
+    <script>
+        const categories = {
+            @foreach($categories as $category)
+            {{$category->id}} : [
+                @foreach(unserializeMetadata($category->metadata) as $md)
+                '{{$md}}',
+                @endforeach
+            ],
+            @endforeach
+        };
+        $(document.body).on('change', '#category', function(e) {
+            $('#attributes').html('');
+            const category = categories[e.target.value];
+            let template = '';
+            category.forEach(value => {
+                const trimmedValue = value.replaceAll(' ', '_').toLowerCase();
+                template += `<div class="form-group row">
+                <label for="${trimmedValue}" class="col-md-2 col-form-label">${value}</label>
+                <div class="col-sm-10">
+                    <input type="hidden" id="category_id" value="${e.target.value}" >
+                    <input name="${trimmedValue}" type="text" class="form-control attributes" id="${trimmedValue}">
+                </div>
+            </div>`;
+            })
+            $('#attributes').html(template);
+        });
+    </script>
 @endsection

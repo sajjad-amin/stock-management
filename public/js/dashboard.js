@@ -20,12 +20,13 @@ $('#image').on('change', function (e){
 $('#product-form').submit(function (e){
     e.preventDefault();
     const url = $(e.target.targetUrl).val();
-    const event = $(e.target.actionEvent).val()
+    const event = $(e.target.actionEvent).val();
     createProduct(url, event);
 });
 function createProduct(url, event){
     const productCode = $('#product-code').val();
     const image = $('#image').prop('files')[0];
+    const category = $('#category_id').val();
     const title = $('#title').val();
     const price = $('#price').val();
     const sellPrice = $('#sell-price').val();
@@ -33,9 +34,16 @@ function createProduct(url, event){
     const discount = $('#discount').val();
     const shortDescription = $('#short-description').val();
     const description = $('#description').val();
+    const attrs = $('.attributes');
+    const attrObject = {};
+    for(let i = 0; i < attrs.length; i++){
+        attrObject[attrs[i].name] = attrs[i].value
+    }
+    const attributes = JSON.stringify(attrObject);
     const formData = new FormData();
     formData.append('product_code', productCode);
     formData.append('image', image);
+    formData.append('category_id', category);
     formData.append('title', title);
     formData.append('price', price);
     formData.append('sell_price', sellPrice);
@@ -43,6 +51,7 @@ function createProduct(url, event){
     formData.append('discount', discount);
     formData.append('short_description', shortDescription);
     formData.append('description', description);
+    formData.append('metadata', attributes);
     axios.post(url, formData, {headers: {'content-type':'multipart/form-data'}})
         .then(response => {
             console.log(response);
@@ -50,7 +59,7 @@ function createProduct(url, event){
                 window.location.replace(response.data.redirect_url);
             }
         }).catch(error => {
-        console.log(error.response.status)
+        console.log(error)
     });
 }
 function deleteProduct(url){

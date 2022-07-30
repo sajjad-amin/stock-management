@@ -27,6 +27,7 @@ Route::get('system/dashboard', [DashboardController::class, 'index'])->middlewar
 Route::prefix('system')->middleware(['auth','verified', 'can:admin'])->group(function(){
     Route::prefix('category')->name('category.')->group(function(){
         Route::get('all', [CategoryController::class, 'allCategories'])->name('all');
+        Route::get('find/{id}', [CategoryController::class, 'findCategory'])->name('find');
         Route::get('new', [CategoryController::class, 'newCategory'])->name('new');
         Route::post('new', [CategoryController::class, 'createCategory'])->name('new.create');
         Route::get('edit/{id?}', [CategoryController::class, 'editCategory'])->name('edit');

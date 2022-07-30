@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -14,7 +15,8 @@ class ProductController extends Controller
     }
 
     function newProduct(){
-        return view('system.products.new');
+        $categories = Category::orderBy('name', 'ASC')->get();
+        return view('system.products.new', compact(['categories']));
     }
 
     function createProduct(Request $request){
@@ -25,17 +27,19 @@ class ProductController extends Controller
             'price' => ['required', 'integer'],
             'sell_price' => ['required', 'integer'],
             'quantity' => ['required', 'integer'],
-            'discount' => ['required', 'integer',],
+            'discount' => ['required', 'integer'],
             'short_description' => ['required', 'string'],
             'description' => ['required', 'string']
         ];
         $data = [
+            'category_id' => $request->category_id,
             'product_code' => $request->product_code,
             'title' => $request->title,
             'price' => $request->price,
             'sell_price' => $request->sell_price,
             'quantity' => $request->quantity,
             'discount' => $request->discount,
+            'metadata' => serialize(json_decode($request->metadata)),
             'short_description' => $request->short_description,
             'description' => $request->description
         ];
@@ -54,7 +58,8 @@ class ProductController extends Controller
 
     function editProduct($id = null){
         $product = Product::where('id', $id)->first();
-        return view('system.products.edit', compact(['product']));
+        $categories = Category::whereId($product->category_id)->orderBy('name', 'ASC')->first();
+        return view('system.products.edit', compact(['product', 'categories']));
     }
 
     function updateProduct(Request $request, $id){
@@ -66,7 +71,7 @@ class ProductController extends Controller
             'price' => ['required', 'integer'],
             'sell_price' => ['required', 'integer'],
             'quantity' => ['required', 'integer'],
-            'discount' => ['required', 'integer',],
+            'discount' => ['required', 'integer'],
             'short_description' => ['required', 'string'],
             'description' => ['required', 'string']
         ];
@@ -77,6 +82,7 @@ class ProductController extends Controller
             'sell_price' => $request->sell_price,
             'quantity' => $request->quantity,
             'discount' => $request->discount,
+            'metadata' => serialize(json_decode($request->metadata)),
             'short_description' => $request->short_description,
             'description' => $request->description
         ];

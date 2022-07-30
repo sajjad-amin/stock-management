@@ -18,11 +18,13 @@ class CreateProductsTable extends Migration
             $table->id();
             $table->string('product_code');
             $table->string('image')->nullable();
+            $table->integer('category_id');
             $table->string('title');
             $table->integer('price');
             $table->integer('sell_price');
             $table->integer('quantity');
             $table->integer('discount');
+            $table->text('metadata')->nullable();
             $table->tinyText('short_description');
             $table->text('description');
             $table->timestamp('created_at')->useCurrent();
