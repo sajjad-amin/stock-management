@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\InstallController;
 use App\Http\Controllers\ProductController;
@@ -24,6 +25,14 @@ Route::get('/', [WebsiteController::class, 'home'])->name('home');
 Route::get('system/dashboard', [DashboardController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::prefix('system')->middleware(['auth','verified', 'can:admin'])->group(function(){
+    Route::prefix('category')->name('category.')->group(function(){
+        Route::get('all', [CategoryController::class, 'allCategories'])->name('all');
+        Route::get('new', [CategoryController::class, 'newCategory'])->name('new');
+        Route::post('new', [CategoryController::class, 'createCategory'])->name('new.create');
+        Route::get('edit/{id?}', [CategoryController::class, 'editCategory'])->name('edit');
+        Route::post('update/{id}', [CategoryController::class, 'updateCategory'])->name('update');
+        Route::delete('delete/{id}', [CategoryController::class, 'deleteCategory'])->name('delete');
+    });
     Route::prefix('products')->name('product.')->group(function(){
         Route::get('all', [ProductController::class, 'allProducts'])->name('all');
         Route::get('new', [ProductController::class, 'newProduct'])->name('new');
