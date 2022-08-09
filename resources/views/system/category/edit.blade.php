@@ -19,7 +19,7 @@
             </div>
             <input type="submit" class="btn btn-primary float-right" value="Update">
         </form>
-        <form method="post" action="{{route('category.delete',['id' => $category->id])}}">
+        <form method="post" id="delete" action="{{route('category.delete',['id' => $category->id])}}">
             @csrf
             @method("delete")
             <button type="submit" class="btn btn-danger float-right mr-3">Delete</button>
@@ -27,4 +27,9 @@
     </div>
 @endsection
 @section('script')
+    <script>
+        $('#delete').submit(function (e){
+            return confirm('Are you sure?');
+        });
+    </script>
 @endsection

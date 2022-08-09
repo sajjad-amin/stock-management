@@ -24,7 +24,7 @@ Route::get('/', [WebsiteController::class, 'home'])->name('home');
 
 Route::get('system/dashboard', [DashboardController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::prefix('system')->middleware(['auth','verified', 'can:admin'])->group(function(){
+Route::prefix('system')->middleware(['auth','verified','can:admin'])->group(function(){
     Route::prefix('category')->name('category.')->group(function(){
         Route::get('all', [CategoryController::class, 'allCategories'])->name('all');
         Route::get('find/{id}', [CategoryController::class, 'findCategory'])->name('find');
