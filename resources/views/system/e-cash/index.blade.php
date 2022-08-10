@@ -40,7 +40,7 @@
 @section('script')
     <script>
         $('.delete').submit(function (e){
-            return confirm('Are you sure?');
+            return prompt('Type Confirm to delete this vendor') === 'Confirm';
         });
         $('.editBtn').click(function (e){
             const parent = $(this).parent().parent();

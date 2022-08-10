@@ -99,18 +99,22 @@
                     </div>
                     <table class="table table-dark">
                         <thead>
-                        <tr class="text-center">
+                        <tr>
                             <th scope="col">Product Code</th>
                             <th scope="col">Quantity</th>
                             <th scope="col">Paid</th>
                             <th scope="col">Discount</th>
                             <th scope="col">Selling Date</th>
-                            <th colspan="2">Action</th>
+                            <th scope="col">
+                                <span id="selectText">Select</span>
+                                <button id="invBtn" class="btn btn-sm btn-primary d-none">Create Invoice</button>
+                            </th>
+                            <th scope="col">Action</th>
                         </tr>
                         </thead>
                         <tbody id="recentSellsTable">
                         @foreach($sells as $item)
-                            <tr>
+                            <tr class="text-center">
                                 <td>
                                     {{$item->product_code}}
                                 </td>
@@ -127,7 +131,7 @@
                                     {{$item->created_at->format('d M, Y | h:i A')}}
                                 </td>
                                 <td>
-                                    <button class="btn btn-sm btn-primary">Print</button>
+                                    <input class="form-check-input checked" type="checkbox" value="{{$item->id}}">
                                 </td>
                                 <td>
                                     <form action="{{route('sell.return')}}" method="post">
@@ -148,25 +152,47 @@
 @endsection
 @section('script')
     <script>
-        $(document).ready(function(){
-            $('#recentSellsBtn').click(function (){
-                $('#recentSells').toggle();
-                $(this).text(function(i, text){
-                    return text === "Show Recent Sells" ? "Hide Recent Sells" : "Show Recent Sells";
-                });
+        let arr = [];
+        $('#recentSellsBtn').click(function (){
+            $('#recentSells').toggle();
+            $(this).text(function(i, text){
+                return text === "Show Recent Sells" ? "Hide Recent Sells" : "Show Recent Sells";
             });
-            $("#search").on("keyup", function() {
-                let value = $(this).val().toLowerCase();
-                $("#productTable tr").filter(function() {
-                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1);
-                });
+        });
+        $("#search").on("keyup", function() {
+            let value = $(this).val().toLowerCase();
+            $("#productTable tr").filter(function() {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1);
             });
-            $("#recentSellsSearch").on("keyup", function() {
-                let value = $(this).val().toLowerCase();
-                $("#recentSellsTable tr").filter(function() {
-                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1);
-                });
+        });
+        $("#recentSellsSearch").on("keyup", function() {
+            let value = $(this).val().toLowerCase();
+            $("#recentSellsTable tr").filter(function() {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1);
             });
+        });
+        $(".checked").change(function (e){
+            if(this.checked){
+                arr.push(this.value)
+            }else{
+                const index = arr.indexOf(this.value);
+                if (index > -1) {
+                    arr.splice(index, 1);
+                }
+            }
+            if(arr.length > 0){
+                $('#invBtn').removeClass('d-none');
+                $('#selectText').addClass('d-none');
+            }else{
+                $('#invBtn').addClass('d-none');
+                $('#selectText').removeClass('d-none');
+            }
+        });
+        $('#invBtn').click(function (e){
+            let url = "{{route('invoice.show', ['data' => 'rpdata'])}}";
+            let data = btoa(JSON.stringify(arr));
+            url = url.replace('rpdata', data);
+            window.location.replace(url);
         });
     </script>
 @endsection

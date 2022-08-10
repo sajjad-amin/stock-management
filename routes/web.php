@@ -4,6 +4,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ECashController;
 use App\Http\Controllers\InstallController;
+use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\SellController;
 use App\Http\Controllers\TransactionController;
@@ -58,6 +59,9 @@ Route::prefix('system')->middleware(['auth','verified','can:admin'])->group(func
         Route::get('products', [SellController::class, 'getAll'])->name('products');
         Route::post('products', [SellController::class, 'sell'])->name('sell');
         Route::put('products', [SellController::class, 'returnProduct'])->name('return');
+    });
+    Route::prefix('invoice')->name('invoice.')->group(function(){
+        Route::get('/{data}', [InvoiceController::class, 'showInvoice'])->name('show');
     });
 });
 

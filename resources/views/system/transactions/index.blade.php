@@ -7,7 +7,7 @@
         <form method="post" action="{{route('transactions.new.create')}}" class="mt-5">
             @csrf
             <div class="form-group row">
-                <div class="col-md-3">
+                <div class="col-md-2">
                     <select name="vendor" class="form-control">
                         @foreach($vendors as $vendor)
                             <option value="{{$vendor->name}}">{{$vendor->name}}</option>
@@ -28,10 +28,10 @@
         <hr class="mt-5">
         <form action="" method="get">
             <div class="form-group row">
-                <div class="col-sm-11">
+                <div class="col-sm-10">
                     <input name="search" type="text" class="form-control mr-3 ml-3" placeholder="Search number" autofocus>
                 </div>
-                <div class="col-sm-1">
+                <div class="col-sm-2">
                     <input type="submit" class="btn btn-success" value="Search">
                 </div>
             </div>
