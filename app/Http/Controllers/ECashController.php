@@ -9,50 +9,35 @@ class ECashController extends Controller
 {
     public function allECash(){
         $eCash = ECash::all();
-        return view('system.category.index', compact(['eCash']));
-    }
-
-    public function newECash(){
-        return view('system.category.new');
+        return view('system.e-cash.index', compact(['eCash']));
     }
 
     public function createECash(Request $request){
         $name = $request->name;
-        $metadata = serializeMetadata(explode("\n" ,$request->metadata));
-        if (Category::insert(['name' => $name, 'metadata' => $metadata])){
-            toastr('Category created!', 'success');
+        if (ECash::insert(['name' => $name])){
+            toastr('New vendor created!', 'success');
         } else {
             toastr('Something went wrong!', 'error');
         }
-        return redirect()->action([get_class(), 'allCategories']);
-    }
-
-    public function editECash($id){
-        $category = Category::whereId($id)->first();
-        return view('system.category.edit', compact(['category']));
+        return redirect()->action([get_class(), 'allECash']);
     }
 
     public function updateECash(Request $request, $id){
         $name = $request->name;
-        $metadata = serializeMetadata(explode("\n" ,$request->metadata));
-        if (Category::whereId($id)->update(['name' => $name, 'metadata' => $metadata])){
-            toastr('Category updated!', 'success');
+        if (ECash::whereId($id)->update(['name' => $name])){
+            toastr('Vendor updated!', 'success');
         } else {
             toastr('Something went wrong!', 'error');
         }
-        return redirect()->action([get_class(), 'allCategories']);
+        return redirect()->action([get_class(), 'allECash']);
     }
 
     public function deleteECash($id){
-        if (Category::whereId($id)->delete()){
-            toastr('Category deleted!', 'success');
+        if (ECash::whereId($id)->delete()){
+            toastr('Vendor deleted!', 'success');
         } else {
             toastr('Something went wrong!', 'error');
         }
-        return redirect()->action([get_class(), 'allCategories']);
-    }
-
-    public function findCategory($id){
-        return Category::whereId($id)->first();
+        return redirect()->action([get_class(), 'allECash']);
     }
 }

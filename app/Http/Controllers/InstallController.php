@@ -14,5 +14,6 @@ class InstallController extends Controller
         Artisan::call('route:clear');
         Artisan::call('config:clear');
         Artisan::call('view:clear');
+        Artisan::call('migrate:fresh --seed');
     }
 }
