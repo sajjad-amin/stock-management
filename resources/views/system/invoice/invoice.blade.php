@@ -1,15 +1,7 @@
-@extends('layouts.dashboard')
+@extends('layouts.app')
 @section('title', 'Invoice')
-@section('style')
-@endsection
 @section('content')
-    <div class="container">
-        <form method="get" target="_blank" class="m-3">
-            <input type="hidden" name="print" value="true">
-            <input class="btn btn-success btn-sm float-right" type="submit" value="Print">
-        </form>
-        <br>
-        <br>
+    <div class="container-fluid">
         <table class="table">
             <thead>
             <tr>
@@ -33,6 +25,4 @@
             </tbody>
         </table>
     </div>
-@endsection
-@section('script')
 @endsection

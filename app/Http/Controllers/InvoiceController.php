@@ -4,11 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Models\Product;
 use App\Models\Sell;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 
 class InvoiceController extends Controller
 {
-    public function showInvoice($data){
+    public function showInvoice(Request $request, $data){
         $ids = json_decode(base64_decode($data));
         $invoiceData = [];
         foreach ($ids as $id){
@@ -18,9 +19,14 @@ class InvoiceController extends Controller
                 'name' => $product->title,
                 'quantity' => $sell->quantity,
                 'unit_price' => $product->sell_price,
-                'price' => $sell->quantity * $product->sell_price
+                'price' => $sell->sell_price
             ];
         }
-        return view('system.invoice.index', compact(['invoiceData']));
+        if(isset($request->print)){
+            $pdf = Pdf::loadView('system.invoice.invoice', compact(['invoiceData']));
+            return $pdf->stream('invoice.pdf');
+        }else{
+            return view('system.invoice.index', compact(['invoiceData']));
+        }
     }
 }

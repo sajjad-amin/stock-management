@@ -29,19 +29,21 @@
             </div>
             <div class="form-group row">
                 <label for="price" class="col-md-2 col-form-label">Price</label>
-                <div class="col-sm-1">
+                <div class="col-sm-4">
                     <input name="price" type="number" class="form-control" id="price">
                 </div>
-                <label for="sell-price" class="col-md-1 col-form-label">Sell Price</label>
-                <div class="col-sm-2">
+                <label for="sell-price" class="col-md-2 col-form-label">Sell Price</label>
+                <div class="col-sm-4">
                     <input name="sell-price" type="number" class="form-control" id="sell-price">
                 </div>
-                <label for="quantity" class="col-md-1 col-form-label">Quantity</label>
-                <div class="col-md-2">
+            </div>
+            <div class="form-group row">
+                <label for="quantity" class="col-md-2 col-form-label">Quantity</label>
+                <div class="col-md-4">
                     <input name="quantity" type="number" class="form-control" id="quantity">
                 </div>
-                <label for="discount" class="col-md-1 col-form-label">Discount</label>
-                <div class="col-sm-2">
+                <label for="discount" class="col-md-2 col-form-label">Discount</label>
+                <div class="col-sm-4">
                     <select name="discount" class="form-control" id="discount">
                         <option value="0">None</option>
                         @for($i = 1; $i <= 100; $i++)
