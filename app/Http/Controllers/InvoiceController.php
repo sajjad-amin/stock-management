@@ -23,8 +23,15 @@ class InvoiceController extends Controller
             ];
         }
         if(isset($request->print)){
-            $pdf = Pdf::loadView('system.invoice.invoice', compact(['invoiceData']));
+            $customerData = [
+                'date' => $request->date,
+                'name' => $request->name,
+                'address' => $request->address,
+                'mobile' => $request->mobile
+            ];
+            $pdf = Pdf::loadView('system.invoice.invoice', compact(['invoiceData', 'customerData']));
             return $pdf->stream('invoice.pdf');
+//            return view('system.invoice.invoice', compact(['invoiceData', 'customerData']));
         }else{
             return view('system.invoice.index', compact(['invoiceData']));
         }
